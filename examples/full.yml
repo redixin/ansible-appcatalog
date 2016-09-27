@@ -1,0 +1,26 @@
+---
+
+- hosts: vm
+  remote_user: ubuntu
+  become: true
+  vars:
+    glare_pip: git+git://git.openstack.org/openstack/glare.git#egg=glare
+    catalog_pip: git+git://github.com/redixin/app-catalog.git@devel#egg=openstack_catalog
+    catalog_debug: "True"
+    with_app_catalog: true
+    glare_nginx_port: 9494
+    catalog_nginx_port: 80
+    glare_user: www-data
+    catalog_user: www-data
+    glare_deploy_with: uwsgi
+    catalog_deploy_with: uwsgi
+    glare_uwsgi_socket: /tmp/glare.sock
+    catalog_uwsgi_socket: /tmp/catalog.sock
+    catalog_domain: example.net
+    catalog_protocol: http
+    glare_protocol: http
+    glare_domain: glare.example.net:9494
+  roles:
+    - nginx
+    - glare
+    - openstack_catalog
