@@ -28,7 +28,9 @@
   pip: name="{{catalog_pip}}"
 
 - name: catalog uwsgi systemd file
-  notify: "restart catalog"
+  notify:
+    - restart systemd
+    - restart catalog
   template: src=templates/openstack-catalog.service dest=/etc/systemd/system/openstack-catalog.service
   when: catalog_deploy_with=="uwsgi"
 

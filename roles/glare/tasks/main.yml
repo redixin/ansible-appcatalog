@@ -30,8 +30,8 @@
 
 - name: glare-uwsgi systemd file
   notify:
-    - restart glare
     - restart systemd
+    - restart glare
   template: src=templates/glare.service dest=/etc/systemd/system/glare.service
   when: glare_deploy_with=="uwsgi"
 

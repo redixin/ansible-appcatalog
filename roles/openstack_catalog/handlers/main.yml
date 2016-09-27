@@ -2,3 +2,6 @@
 
 - name: restart catalog
   service: name=openstack-catalog state=restarted
+
+- name: restart systemd
+  command: /bin/systemctl daemon-reload
