@@ -1,0 +1,11 @@
+[Unit]
+Description=OpenStack App Catalog Service
+
+[Service]
+EnvironmentFile=-/etc/default/openstack-catalog
+ExecStart=/usr/local/bin/uwsgi --module openstack_catalog.wsgi:application --chmod-socket=777 --vacuum  --uid {{catalog_user}} --socket {{catalog_uwsgi_socket}} --logto=/tmp/catalog.log
+KillMode=process
+Restart=on-failure
+
+[Install]
+Alias=glare.service

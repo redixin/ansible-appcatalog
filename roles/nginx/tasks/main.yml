@@ -1,0 +1,14 @@
+---
+
+- name: nginx package
+  package: name=nginx state=latest
+
+- name: catalog config
+  notify: reload nginx
+  template: src=templates/catalog.conf dest=/etc/nginx/sites-enabled/catalog.conf
+  when: catalog_deploy_with=="uwsgi"
+
+- name: glare config
+  notify: reload nginx
+  template: src=templates/glare.conf dest=/etc/nginx/sites-enabled/glare.conf
+  when: glare_deploy_with=="uwsgi"

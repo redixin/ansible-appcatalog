@@ -1,0 +1,11 @@
+[Unit]
+Description=Glance Image Repository Service
+
+[Service]
+Environment=GLARE_CONFIG_FILE=/etc/glare/glare.conf
+ExecStart=/usr/local/bin/uwsgi --module glare.wsgi:application --chmod-socket=777 --vacuum --uid {{glare_user}} --socket {{glare_uwsgi_socket}}
+KillMode=process
+Restart=on-failure
+
+[Install]
+Alias=glare.service

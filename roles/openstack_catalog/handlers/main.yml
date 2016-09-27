@@ -1,0 +1,4 @@
+---
+
+- name: restart catalog
+  service: name=openstack-catalog state=restarted
