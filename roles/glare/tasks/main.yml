@@ -9,7 +9,7 @@
     - libffi-dev
     - python-pip
 
-- name: memcahed
+- name: memcached
   package: name=memcached state=latest
   when: "{{ with_app_catalog | default(false) }}==true"
 
@@ -52,3 +52,10 @@
 
 - name: glare service
   service: name=glare state=started
+
+- name: recreate assets db
+  when: "{{ recreate_assets | default(false) }}"
+  notify:
+    - restart glare
+    - restart memcached
+  script: scripts/import_assets.sh

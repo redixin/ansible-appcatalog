@@ -5,3 +5,6 @@
 
 - name: restart systemd
   command: /bin/systemctl daemon-reload
+
+- name: restart memcached
+  service: name=memcached state=restarted
