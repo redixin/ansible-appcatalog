@@ -7,6 +7,7 @@
     - python-dev
     - libffi-dev
     - python-pip
+    - git
 
 - name: memcahed
   package: name=memcached state=latest
@@ -32,7 +33,15 @@
     - restart systemd
     - restart catalog
   template: src=templates/openstack-catalog.service dest=/etc/systemd/system/openstack-catalog.service
-  when: catalog_deploy_with=="uwsgi"
+  when: (glare_deploy_with == "uwsgi") and
+        (init == "systemd")
+
+- name: catalog uwsgi systemd file
+  notify:
+    - restart catalog
+  template: src=templates/openstack-catalog.conf dest=/etc/init/openstack-catalog.conf
+  when: (glare_deploy_with == "uwsgi") and
+        (init == "upstart")
 
 - name: catalog config directory
   file: name=/etc/openstack-catalog state=directory

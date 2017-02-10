@@ -97,10 +97,13 @@ Now copy/edit examples/full.yml::
         catalog_protocol: http
         glare_protocol: http
         glare_domain: 192.168.10.10:9494
+        init: systemd
       roles:
         - nginx
         - glare
         - openstack_catalog
+
+NOTE: use "init: upstart" for upstart based systems
 
 And finally deploy everything::
 

@@ -20,6 +20,7 @@
     catalog_protocol: http
     glare_protocol: http
     glare_domain: glare.example.net:9494
+    init: upstart
   roles:
     - nginx
     - glare

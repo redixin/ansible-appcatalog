@@ -8,6 +8,7 @@
     - libpq-dev
     - libffi-dev
     - python-pip
+    - git
 
 - name: memcached
   package: name=memcached state=latest
@@ -33,14 +34,22 @@
     - restart systemd
     - restart glare
   template: src=templates/glare.service dest=/etc/systemd/system/glare.service
-  when: glare_deploy_with=="uwsgi"
+  when: (glare_deploy_with == "uwsgi") and
+        (init == "systemd")
+
+- name: glare-uwsgi systemd file
+  notify:
+    - restart glare
+  template: src=templates/glare-upstart.conf dest=/etc/init/glare.conf
+  when: (glare_deploy_with == "uwsgi") and
+        (init == "upstart")
 
 - name: glare config directory
   file: name=/etc/glare state=directory
 
 - name: glare config file
   notify: "restart glare"
-  template: src=templates/glare.conf dest=/etc/glare/glare.conf
+  template: src=templates/glare.conf dest=/etc/glare.conf
 
 - name: glare paste.ini
   notify: restart glare
